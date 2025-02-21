@@ -11,21 +11,23 @@ async function bootstrap() {
     new FastifyAdapter(),
   )
 
+  const logger = new Logger('Bootstrap')
   const port = app.get(EnvService).get('PORT')
   const environment = app.get(EnvService).get('NODE_ENV')
-  const logger = new Logger('Bootstrap')
 
-  app.enableCors()
+  const notInProduction = environment !== 'production'
 
-  if (environment !== 'production') {
-    const config = new DocumentBuilder()
+  if (notInProduction) {
+    let config = new DocumentBuilder()
       .setTitle('Node Pay')
-      .setDescription('The NodeJS Pay api documentation')
+      .setDescription('The NodeJS Pay API documentation')
       .setVersion('0.1')
-      .addBearerAuth()
-      .build()
 
-    const document = SwaggerModule.createDocument(app, config)
+    if (environment === 'development') {
+      config = config.addBearerAuth()
+    }
+
+    const document = SwaggerModule.createDocument(app, config.build())
     SwaggerModule.setup('doc', app, document, {
       swaggerOptions: {
         apisSorter: 'alpha',
@@ -35,11 +37,15 @@ async function bootstrap() {
     })
   }
 
+  app.enableCors()
+
   await app
     .listen(port, '0.0.0.0')
     .then(async () => {
       global.apiHost = await app.getUrl()
-      logger.log(`🚀 Server is running on: ${global.apiHost}`)
+      logger.log(
+        `🚀 Server is running${notInProduction ? `, swagger: ${global.apiHost}/doc` : ` on: ${global.apiHost}`}`,
+      )
     })
     .catch(error => logger.error(`❌ Server starts error: ${error}`))
 }
