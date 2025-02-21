@@ -6,6 +6,9 @@
     "source.formatDocument": "explicit",
     "source.fixAll.eslint": "explicit"
   },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
   "files.autoSave": "onFocusChange",
   "material-icon-theme.activeIconPack": "nest",
   "material-icon-theme.files.associations": {

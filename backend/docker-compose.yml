@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: bitnami/postgresql:latest
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=node_pay
+    ports:
+      - 5432:5432
+    volumes:
+      - node_pay_data:/bitnami/postgresql
+
+volumes:
+  node_pay_data:
