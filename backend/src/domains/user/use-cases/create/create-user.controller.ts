@@ -8,6 +8,7 @@ import {
 import { ApiResponse, ApiTags } from '@nestjs/swagger'
 import { ConflictError } from '@/infra/errors'
 import { ValidateAndDocumentBody, type ZodObj, z } from '@/infra/pipes/zod.pipe'
+import { AllowUnauthenticated } from '@/infra/providers/authentication/authentication.guard'
 import { CreateUserArgs } from '../../repositories/user.repository'
 import { CreateUserService } from './create-user.service'
 
@@ -17,6 +18,7 @@ const zCreateUserData: ZodObj<CreateUserArgs['data']> = z.object({
   password: z.string().openapi({ example: 'Pwd@123' }),
 })
 
+@AllowUnauthenticated()
 @ApiTags('User')
 @Controller('/users')
 export class CreateUserController {

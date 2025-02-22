@@ -3,6 +3,8 @@ import { CryptographyModule } from '@/infra/providers/cryptography/cryptography.
 import { PrismaModule } from '@/infra/providers/prisma/prisma.module'
 import { PrismaUserRepository } from './repositories/prisma.user.repository'
 import { UserRepository } from './repositories/user.repository'
+import { AuthenticateUserController } from './use-cases/authenticate/authenticate-user.controller'
+import { AuthenticateUserService } from './use-cases/authenticate/authenticate-user.service'
 import { CreateUserController } from './use-cases/create/create-user.controller'
 import { CreateUserService } from './use-cases/create/create-user.service'
 import { DeleteUserController } from './use-cases/delete/delete-user.controller'
@@ -11,7 +13,12 @@ import { FindManyUserController } from './use-cases/find-many/find-many-user.con
 import { FindManyUserService } from './use-cases/find-many/find-many-user.service'
 
 @Module({
-  controllers: [CreateUserController, DeleteUserController, FindManyUserController],
+  controllers: [
+    CreateUserController,
+    DeleteUserController,
+    FindManyUserController,
+    AuthenticateUserController,
+  ],
   imports: [PrismaModule, CryptographyModule],
   providers: [
     {
@@ -21,6 +28,7 @@ import { FindManyUserService } from './use-cases/find-many/find-many-user.servic
     CreateUserService,
     DeleteUserService,
     FindManyUserService,
+    AuthenticateUserService,
   ],
 })
 export class UserModule {}

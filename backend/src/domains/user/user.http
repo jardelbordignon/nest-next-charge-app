@@ -14,10 +14,22 @@ Content-Type: application/json
 }
 ###
 
-# @name delete_user
-DELETE {{apiUrl}}/users/80d09088-3648-49e3-b6ba-38dbca24fae3
+# @name authenticate_user
+POST {{apiUrl}}/users/authenticate
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
 ###
 
 # @name find_many_users
 GET {{apiUrl}}/users
+Authorization: Bearer {{authenticate_user.response.body.accessToken}}
+###
+
+# @name delete_user
+DELETE {{apiUrl}}/users/{{find_many_users.response.body.0.id}}
+Authorization: Bearer {{authenticate_user.response.body.accessToken}}
 ###
