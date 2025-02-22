@@ -7,6 +7,6 @@ export default defineConfig({
     ...userConfig.test,
     include: ['**/*.test.ts'],
     root: process.env.ROOT,
-    setupFiles: ['./setup.e2e.ts'],
+    setupFiles: ['./test/setup.e2e.ts'],
   },
 })
