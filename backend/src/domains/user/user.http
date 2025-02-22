@@ -1,0 +1,15 @@
+
+@email = john.doe@email.com
+@fullName = John Doe
+@password = Pwd@123
+
+# @name create_user
+POST  {{apiUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "fullName": "{{fullName}}",
+  "password": "{{password}}"
+}
+###

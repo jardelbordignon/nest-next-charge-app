@@ -13,5 +13,16 @@
   "material-icon-theme.activeIconPack": "nest",
   "material-icon-theme.files.associations": {
     "vitest.config.e2e.ts": "Vitest"
+  },
+  "rest-client.environmentVariables": {
+    "development": {
+      "apiUrl": "http://localhost:4000"
+    },
+    // "homolog": {
+    //   "apiUrl": "https://your-hml-api.com"
+    // },
+    // "production": {
+    //   "apiUrl": "https://your-prd-api.com"
+    // }
   }
 }
