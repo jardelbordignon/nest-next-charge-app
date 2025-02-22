@@ -4,7 +4,7 @@
 @password = Pwd@123
 
 # @name create_user
-POST  {{apiUrl}}/users
+POST {{apiUrl}}/users
 Content-Type: application/json
 
 {
@@ -12,4 +12,12 @@ Content-Type: application/json
   "fullName": "{{fullName}}",
   "password": "{{password}}"
 }
+###
+
+# @name delete_user
+DELETE {{apiUrl}}/users/80d09088-3648-49e3-b6ba-38dbca24fae3
+###
+
+# @name find_many_users
+GET {{apiUrl}}/users
 ###

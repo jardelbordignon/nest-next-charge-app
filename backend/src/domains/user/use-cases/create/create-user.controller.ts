@@ -22,7 +22,7 @@ const zCreateUserData: ZodObj<CreateUserArgs['data']> = z.object({
 export class CreateUserController {
   constructor(private createUserService: CreateUserService) {}
 
-  @ValidateAndDocumentBody(zCreateUserData, { summary: 'Create User' })
+  @ValidateAndDocumentBody(zCreateUserData, { summary: 'Create an user' })
   @ApiResponse({ description: 'User created successfully', status: 201 })
   @ApiResponse({
     status: 409,

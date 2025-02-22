@@ -20,7 +20,7 @@ export class CreateUserService {
     const userWithSameEmail = await this.userRepository.findOne({ where: { email } })
 
     if (userWithSameEmail) {
-      throw new ConflictError(`User with ${email} email address already exists.`)
+      throw new ConflictError(`User with ${email} email address already exists`)
     }
 
     const user = await this.userRepository.create({

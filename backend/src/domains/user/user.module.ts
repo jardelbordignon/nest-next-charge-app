@@ -5,9 +5,13 @@ import { PrismaUserRepository } from './repositories/prisma.user.repository'
 import { UserRepository } from './repositories/user.repository'
 import { CreateUserController } from './use-cases/create/create-user.controller'
 import { CreateUserService } from './use-cases/create/create-user.service'
+import { DeleteUserController } from './use-cases/delete/delete-user.controller'
+import { DeleteUserService } from './use-cases/delete/delete-user.service'
+import { FindManyUserController } from './use-cases/find-many/find-many-user.controller'
+import { FindManyUserService } from './use-cases/find-many/find-many-user.service'
 
 @Module({
-  controllers: [CreateUserController],
+  controllers: [CreateUserController, DeleteUserController, FindManyUserController],
   imports: [PrismaModule, CryptographyModule],
   providers: [
     {
@@ -15,6 +19,8 @@ import { CreateUserService } from './use-cases/create/create-user.service'
       useClass: PrismaUserRepository,
     },
     CreateUserService,
+    DeleteUserService,
+    FindManyUserService,
   ],
 })
 export class UserModule {}
