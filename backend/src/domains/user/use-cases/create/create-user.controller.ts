@@ -16,6 +16,13 @@ const zCreateUserData: ZodObj<CreateUserArgs['data']> = z.object({
   email: z.string().openapi({ example: 'john-doe@email.com' }),
   fullName: z.string().openapi({ example: 'John Doe' }),
   password: z.string().openapi({ example: 'Pwd@123' }),
+  address: z.string().openapi({ example: 'Rua Parecis' }),
+  addressNumber: z.string().openapi({ example: '170' }),
+  addressComplement: z.string().openapi({ example: 'Esquina com Tupiniquins' }),
+  document: z.string().openapi({ example: '24971563792' }),
+  phone: z.string().openapi({ example: '54991307936' }),
+  postalCode: z.string().openapi({ example: '99500-000' }),
+  province: z.string().openapi({ example: 'Rio Grande do Sul' }),
 })
 
 @AllowUnauthenticated()

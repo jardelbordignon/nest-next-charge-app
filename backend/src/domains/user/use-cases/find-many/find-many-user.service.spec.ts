@@ -1,12 +1,11 @@
+import { CREATE_USER_DATA } from 'test/utils'
 import { InMemoryUserRepository } from '../../repositories/in-memory.user.repository'
 import { FindManyUserService } from './find-many-user.service'
 
-let userRepository: InMemoryUserRepository
-let findManyUserService: FindManyUserService
-
-const email = 'johndoe@email.com'
-
 describe('Delete user', () => {
+  let userRepository: InMemoryUserRepository
+  let findManyUserService: FindManyUserService
+
   beforeAll(() => {
     userRepository = new InMemoryUserRepository()
     findManyUserService = new FindManyUserService(userRepository)
@@ -14,13 +13,7 @@ describe('Delete user', () => {
 
   beforeEach(async () => {
     userRepository.reset()
-    await userRepository.create({
-      data: {
-        email,
-        fullName: 'John Doe',
-        password: 'Pwd@123',
-      },
-    })
+    await userRepository.create({ data: CREATE_USER_DATA })
   })
 
   it('should be able to find many users', async () => {
@@ -29,9 +22,9 @@ describe('Delete user', () => {
 
     await userRepository.create({
       data: {
+        ...CREATE_USER_DATA,
         email: 'jane.doe@email.com',
         fullName: 'Jane Doe',
-        password: 'Pwd@123',
       },
     })
 

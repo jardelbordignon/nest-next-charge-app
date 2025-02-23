@@ -15,19 +15,18 @@ export class CreateUserService {
   ) {}
 
   async execute(data: CreateUserArgs['data']): Promise<UserEntity> {
-    const { email, fullName, password } = data
-
-    const userWithSameEmail = await this.userRepository.findOne({ where: { email } })
+    const userWithSameEmail = await this.userRepository.findOne({
+      where: { email: data.email },
+    })
 
     if (userWithSameEmail) {
-      throw new ConflictError(`User with ${email} email address already exists`)
+      throw new ConflictError(`User with ${data.email} email address already exists`)
     }
 
     const user = await this.userRepository.create({
       data: {
-        email,
-        fullName,
-        password: await this.hasher.hash(password),
+        ...data,
+        password: await this.hasher.hash(data.password),
       },
     })
 

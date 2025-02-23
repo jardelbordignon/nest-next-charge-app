@@ -1,3 +1,4 @@
+import { CREATE_USER_DATA } from 'test/utils'
 import { UnauthorizedError } from '@/infra/errors'
 import { FakeEncrypter } from '@/infra/providers/cryptography/encrypter/fake-encrypter'
 import { FakeHasher } from '@/infra/providers/cryptography/hasher/fake-hasher'
@@ -32,8 +33,8 @@ describe('Authenticate user', () => {
     userRepository.reset()
     await userRepository.create({
       data: {
+        ...CREATE_USER_DATA,
         email,
-        fullName: 'John Doe',
         password: hashedPassword,
       },
     })

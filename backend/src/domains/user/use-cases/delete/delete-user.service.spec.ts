@@ -1,13 +1,12 @@
+import { CREATE_USER_DATA } from 'test/utils'
 import { NotFoundError } from '@/infra/errors'
 import { InMemoryUserRepository } from '../../repositories/in-memory.user.repository'
 import { DeleteUserService } from './delete-user.service'
 
-let userRepository: InMemoryUserRepository
-let deleteUserService: DeleteUserService
-
-const email = 'johndoe@email.com'
-
 describe('Delete user', () => {
+  let userRepository: InMemoryUserRepository
+  let deleteUserService: DeleteUserService
+
   beforeAll(() => {
     userRepository = new InMemoryUserRepository()
     deleteUserService = new DeleteUserService(userRepository)
@@ -15,13 +14,7 @@ describe('Delete user', () => {
 
   beforeEach(async () => {
     userRepository.reset()
-    await userRepository.create({
-      data: {
-        email,
-        fullName: 'John Doe',
-        password: 'Pwd@123',
-      },
-    })
+    await userRepository.create({ data: CREATE_USER_DATA })
   })
 
   it('should be able to delete an user', async () => {
