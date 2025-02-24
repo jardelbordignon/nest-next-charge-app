@@ -13,7 +13,7 @@ import { CurrentUser } from '@/infra/providers/authentication/current-user.decor
 import { type CreateChargeDto, CreateChargeService } from './create-charge.service'
 import type { Charge } from '@prisma/client'
 
-type CreateChargeBody = Omit<CreateChargeDto, 'createdById'>
+type CreateChargeBody = Omit<CreateChargeDto, 'createdById' | 'invoiceUrl'>
 
 const zCreateChargeData: ZodObj<CreateChargeBody> = z.object({
   paymentMethod: z.enum(['CREDIT_CARD', 'BOLETO', 'PIX']).openapi({ example: 'PIX' }),

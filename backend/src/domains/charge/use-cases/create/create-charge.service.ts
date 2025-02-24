@@ -20,6 +20,7 @@ export type CreateChargeDto = Omit<
   | 'createdBy'
   | 'payedAt'
   | 'receivedBy'
+  | 'invoiceUrl'
 >
 
 @Injectable()
@@ -119,6 +120,7 @@ export class CreateChargeService {
         receivedById: receivedById!,
         paymentStatus: 'PENDING',
         paymentId: payment.id,
+        invoiceUrl: payment.invoiceUrl,
         paymentProvider: 'ASAAS',
         paymentMethod,
       },

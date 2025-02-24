@@ -67,6 +67,7 @@ model Charge {
   paymentId       String           @map("payment_id")
   paymentMethod   PaymentMethods   @map("payment_method")
   paymentStatus   PaymentStatus    @map("payment_status")
+  invoiceUrl      String           @map("invoice_url")
   amount          Float
   description     String
   dueDate         DateTime?        @map("due_date")

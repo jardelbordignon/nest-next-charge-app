@@ -22,6 +22,7 @@ export type Charge = {
   paymentId: string
   paymentMethod: string
   paymentStatus: string
+  invoiceUrl: string
   amount: number,
   description: string
   dueDate: string
