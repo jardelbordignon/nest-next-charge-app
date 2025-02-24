@@ -1,21 +1,24 @@
 import {
   BadRequestException,
   Body,
-  ConflictException,
   Controller,
+  HttpCode,
+  NotFoundException,
   Post,
 } from '@nestjs/common'
 import { ApiResponse, ApiTags } from '@nestjs/swagger'
-import { ConflictError } from '@/infra/errors'
+import { NotFoundError } from '@/infra/errors'
 import { ValidateAndDocumentBody, type ZodObj, z } from '@/infra/pipes/zod.pipe'
+import { CurrentUser } from '@/infra/providers/authentication/current-user.decorator'
 import { type CreateChargeDto, CreateChargeService } from './create-charge.service'
 import type { Charge } from '@prisma/client'
 
-const zCreateChargeData: ZodObj<CreateChargeDto> = z.object({
+type CreateChargeBody = Omit<CreateChargeDto, 'createdById'>
+
+const zCreateChargeData: ZodObj<CreateChargeBody> = z.object({
   paymentMethod: z.enum(['CREDIT_CARD', 'BOLETO', 'PIX']).openapi({ example: 'PIX' }),
   amount: z.number().positive().openapi({ example: 100 }),
   description: z.string().min(1).openapi({ example: 'Compra do equipamento' }),
-  createdById: z.string().uuid().openapi({ example: 'seller-uuid' }),
   receivedById: z.string().uuid().openapi({ example: 'customer-uuid' }),
 })
 
@@ -25,16 +28,27 @@ export class CreateChargeController {
   constructor(private createChargeService: CreateChargeService) {}
 
   @ValidateAndDocumentBody(zCreateChargeData, { summary: 'Create an charge' })
-  @ApiResponse({ description: 'Charge created successfully', status: 201 })
+  @ApiResponse({
+    description: 'Charge created successfully',
+    status: 200,
+    schema: {},
+  })
+  @HttpCode(200)
   @Post()
-  async handle(@Body() body: CreateChargeDto): Promise<Charge> {
+  async handle(
+    @CurrentUser('sub') userId: string,
+    @Body() body: CreateChargeBody,
+  ): Promise<Charge> {
     try {
-      return this.createChargeService.execute(body)
+      return await this.createChargeService.execute({
+        ...body,
+        createdById: userId,
+      })
     } catch (error) {
       if (error instanceof Error) {
         switch (error.constructor) {
-          case ConflictError:
-            throw new ConflictException(error.message)
+          case NotFoundError:
+            throw new NotFoundException(error.message)
           default:
             throw new BadRequestException(error.message)
         }
