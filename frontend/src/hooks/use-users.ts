@@ -1,5 +1,6 @@
-import api from '@/lib/api'
+import cookies from 'js-cookie'
 import { z } from 'zod'
+import api from '@/lib/api'
 
 export const createUserFormSchema = z.object({
   email: z.string().email().min(1),
@@ -38,6 +39,11 @@ export const useUsers = () => {
     const response = await api.post<{ "accessToken": string }>('/users/authenticate', userData)
     if (response.data.accessToken) {
       api.defaults.headers.Authorization = `Bearer ${response.data.accessToken}`
+      cookies.set('access_token', response.data.accessToken, { 
+        expires: 7, 
+        path: '/', 
+        secure: process.env.NODE_ENV === 'production'
+      })
     }
     return response.data
   }
