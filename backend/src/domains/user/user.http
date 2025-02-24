@@ -1,6 +1,6 @@
 
-@email = john.doe@email.com
 @fullName = John Doe
+@email = john.doe@email.com
 @password = Pwd@123
 
 # @name create_user
@@ -9,8 +9,15 @@ Content-Type: application/json
 
 {
   "email": "{{email}}",
+  "password": "{{password}}",
   "fullName": "{{fullName}}",
-  "password": "{{password}}"
+  "document": "03760520073",
+  "phone": "54991307936",
+  "address": "Rua Parecis",
+  "addressNumber": "170",
+  "addressComplement": "Casa",
+  "postalCode": "99500000",
+  "province": "RS"
 }
 ###
 

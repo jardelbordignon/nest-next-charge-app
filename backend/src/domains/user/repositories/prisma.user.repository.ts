@@ -2,11 +2,10 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '@/infra/providers/prisma/prisma.service'
 import {
   type CreateUserArgs,
-  type FindOneUserArgs,
   type UpdateUserArgs,
   UserRepository,
 } from './user.repository'
-import type { User } from '@prisma/client'
+import type { Prisma, User } from '@prisma/client'
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
@@ -24,8 +23,12 @@ export class PrismaUserRepository implements UserRepository {
     return this.prisma.user.findMany()
   }
 
-  findOne(args: FindOneUserArgs): Promise<User | null> {
-    return this.prisma.user.findUnique(args)
+  findOne<T extends Prisma.UserFindUniqueArgs>(
+    args: T,
+  ): Promise<
+    T['include'] extends Record<string, any> ? Prisma.UserGetPayload<T> : User | null
+  > {
+    return this.prisma.user.findUnique(args) as any
   }
 
   update(args: UpdateUserArgs): Promise<User | null> {

@@ -12,6 +12,27 @@ export class UserEntity implements Omit<User, 'password'> {
   email!: string
 
   @ApiProperty()
+  document!: string
+
+  @ApiProperty()
+  phone!: string
+
+  @ApiProperty()
+  address!: string
+
+  @ApiProperty()
+  addressNumber!: string
+
+  @ApiProperty()
+  addressComplement!: string | null
+
+  @ApiProperty()
+  province!: string
+
+  @ApiProperty()
+  postalCode!: string
+
+  @ApiProperty()
   createdAt!: Date
 
   @ApiProperty()
