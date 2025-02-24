@@ -13,6 +13,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum PaymentProviders {
+  ASAAS
+}
+
+enum PaymentMethods {
+  CREDIT_CARD
+  BOLETO
+  PIX
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  CANCELED
+}
+
 model User {
   id                String    @id @default(uuid())
   fullName          String    @map("full_name")
@@ -28,5 +44,40 @@ model User {
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime? @default(dbgenerated("NULL")) @updatedAt @map("updated_at")
 
+  paymentProviders PaymentProvider[]
+  chargesCreated   Charge[]          @relation("createdCharges")
+  chargesReceived  Charge[]          @relation("receivedCharges")
+
   @@map("users")
+}
+
+model PaymentProvider {
+  id        String           @id @default(uuid())
+  provider  PaymentProviders
+  accountId String
+  user      User             @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@map("payment_providers")
+}
+
+model Charge {
+  id              String           @id @default(uuid())
+  paymentProvider PaymentProviders @map("payment_provider")
+  paymentId       String           @map("payment_id")
+  paymentMethod   PaymentMethods   @map("payment_method")
+  paymentStatus   PaymentStatus    @map("payment_status")
+  amount          Float
+  description     String
+  dueDate         DateTime?        @map("due_date")
+  payedAt         DateTime?        @default(dbgenerated("NULL")) @map("payed_at")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime?        @default(dbgenerated("NULL")) @updatedAt @map("updated_at")
+
+  createdBy    User   @relation("createdCharges", fields: [createdById], references: [id])
+  createdById  String @map("created_by_id")
+  receivedBy   User   @relation("receivedCharges", fields: [receivedById], references: [id])
+  receivedById String @map("received_by_id")
+
+  @@map("charges")
 }
