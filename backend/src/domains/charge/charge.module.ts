@@ -14,6 +14,8 @@ import { GetBoletoDataController } from './use-cases/get-boleto-data/get-boleto-
 import { GetBoletoDataService } from './use-cases/get-boleto-data/get-boleto-data.service'
 import { GetPixDataController } from './use-cases/get-pix-data/get-pix-data.controller'
 import { GetPixDataService } from './use-cases/get-pix-data/get-pix-data.service'
+import { WebhookChargeController } from './use-cases/webhook/webhook-charge.controller'
+import { WebhookChargeService } from './use-cases/webhook/webhook-charge.service'
 
 @Module({
   controllers: [
@@ -21,6 +23,7 @@ import { GetPixDataService } from './use-cases/get-pix-data/get-pix-data.service
     FindManyChargeController,
     GetBoletoDataController,
     GetPixDataController,
+    WebhookChargeController,
   ],
   imports: [PrismaModule],
   providers: [
@@ -40,6 +43,7 @@ import { GetPixDataService } from './use-cases/get-pix-data/get-pix-data.service
     FindManyChargeService,
     GetBoletoDataService,
     GetPixDataService,
+    WebhookChargeService,
   ],
 })
 export class ChargeModule {}
