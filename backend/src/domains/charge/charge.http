@@ -1,0 +1,15 @@
+@accessToken = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNjBlMjZjOS02MTU0LTQ4M2UtODM4Yi1kZDJlMDlkNDI4NmMiLCJlbWFpbCI6ImpvaG4uZG9lQGVtYWlsLmNvbSIsImlhdCI6MTc0MDM1NjIzNSwiZXhwIjoxNzQwOTYxMDM1fQ.IxCiqfw4bqpnGCVLpSGYeAY0bSczUtkQb1gq1bP2slM
+
+# @name create_charge
+POST {{apiUrl}}/charges
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+  "paymentMethod": "BOLETO",
+  "amount": 100,
+  "description": "Teste de cobrança",
+  "createdById": "260e26c9-6154-483e-838b-dd2e09d4286c",
+  "receivedById": "1025eabc-afa5-41f2-9c3c-fc4bf20b458a"
+}
+###
