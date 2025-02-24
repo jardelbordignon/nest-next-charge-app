@@ -15,6 +15,6 @@ export const CREATE_USER_DATA: CreateUserArgs['data'] = {
 
 export const getUserAuthorization = async () => {
   await global.api.post('/users').send(CREATE_USER_DATA)
-  const { body } = await global.api.post('/auth/credentials').send(CREATE_USER_DATA)
-  return `Bearer ${body.token}`
+  const { body } = await global.api.post('/users/authenticate').send(CREATE_USER_DATA)
+  return `Bearer ${body.accessToken}`
 }

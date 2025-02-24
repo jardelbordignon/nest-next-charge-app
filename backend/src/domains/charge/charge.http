@@ -1,4 +1,17 @@
-@accessToken = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNjBlMjZjOS02MTU0LTQ4M2UtODM4Yi1kZDJlMDlkNDI4NmMiLCJlbWFpbCI6ImpvaG4uZG9lQGVtYWlsLmNvbSIsImlhdCI6MTc0MDM1NjIzNSwiZXhwIjoxNzQwOTYxMDM1fQ.IxCiqfw4bqpnGCVLpSGYeAY0bSczUtkQb1gq1bP2slM
+@email = jessie.doe@email.com
+@password = Pwd@123
+
+# @name authenticate_user
+POST {{apiUrl}}/users/authenticate
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+###
+
+@accessToken = Bearer {{authenticate_user.response.body.accessToken}}
 
 # @name create_charge
 POST {{apiUrl}}/charges
@@ -9,7 +22,20 @@ Authorization: {{accessToken}}
   "paymentMethod": "BOLETO",
   "amount": 100,
   "description": "Teste de cobrança",
-  "createdById": "260e26c9-6154-483e-838b-dd2e09d4286c",
-  "receivedById": "1025eabc-afa5-41f2-9c3c-fc4bf20b458a"
+  "receivedById": "260e26c9-6154-483e-838b-dd2e09d4286c"
 }
+###
+
+# @name find_charges_from_current_user
+GET {{apiUrl}}/charges
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+###
+
+# @name get_pix_data
+GET {{apiUrl}}/charges/pay_uoigza69ble13mm6/pix-data
+Content-Type: application/json
+Authorization: {{accessToken}}
+
 ###

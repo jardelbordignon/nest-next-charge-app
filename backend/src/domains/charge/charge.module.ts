@@ -8,9 +8,20 @@ import { ChargeRepository } from './repositories/charge.repository'
 import { PrismaChargeRepository } from './repositories/prisma-charge.repository'
 import { CreateChargeController } from './use-cases/create/create-charge.controller'
 import { CreateChargeService } from './use-cases/create/create-charge.service'
+import { FindManyChargeController } from './use-cases/find-many/find-many-charge.controller'
+import { FindManyChargeService } from './use-cases/find-many/find-many-charge.service'
+import { GetBoletoDataController } from './use-cases/get-boleto-data/get-boleto-data.controller'
+import { GetBoletoDataService } from './use-cases/get-boleto-data/get-boleto-data.service'
+import { GetPixDataController } from './use-cases/get-pix-data/get-pix-data.controller'
+import { GetPixDataService } from './use-cases/get-pix-data/get-pix-data.service'
 
 @Module({
-  controllers: [CreateChargeController],
+  controllers: [
+    CreateChargeController,
+    FindManyChargeController,
+    GetBoletoDataController,
+    GetPixDataController,
+  ],
   imports: [PrismaModule],
   providers: [
     {
@@ -26,6 +37,9 @@ import { CreateChargeService } from './use-cases/create/create-charge.service'
       useClass: AsaasPaymentProvider,
     },
     CreateChargeService,
+    FindManyChargeService,
+    GetBoletoDataService,
+    GetPixDataService,
   ],
 })
 export class ChargeModule {}

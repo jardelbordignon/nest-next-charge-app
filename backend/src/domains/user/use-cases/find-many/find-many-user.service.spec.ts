@@ -2,7 +2,7 @@ import { CREATE_USER_DATA } from 'test/utils'
 import { InMemoryUserRepository } from '../../repositories/in-memory.user.repository'
 import { FindManyUserService } from './find-many-user.service'
 
-describe('Delete user', () => {
+describe('Find many user', () => {
   let userRepository: InMemoryUserRepository
   let findManyUserService: FindManyUserService
 
