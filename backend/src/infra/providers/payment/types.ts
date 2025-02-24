@@ -161,3 +161,18 @@ export type CreatePaymentResponse = {
   custody: null
   refunds: null
 }
+
+// https://docs.asaas.com/reference/obter-linha-digitavel-do-boleto
+export type GetBoletoDataResponse = {
+  identificationField: string
+  nossoNumero: string
+  barCode: string
+}
+
+// https://docs.asaas.com/reference/obter-qr-code-para-pagamentos-via-pix
+export type GetPixDataResponse = {
+  success: boolean
+  encodedImage: string
+  payload: string
+  expirationDate: string
+}

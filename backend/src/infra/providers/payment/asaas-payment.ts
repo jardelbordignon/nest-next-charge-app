@@ -5,6 +5,8 @@ import type {
   CreateCustomerData,
   CreateCustomerResponse,
   CreatePaymentData,
+  GetBoletoDataResponse,
+  GetPixDataResponse,
 } from './types'
 import 'dotenv/config'
 
@@ -60,5 +62,29 @@ export class AsaasPaymentProvider implements PaymentProvider {
       console.error(errorMsg)
       throw new HttpException(errorMsg, HttpStatus.INTERNAL_SERVER_ERROR)
     }
+  }
+
+  async getBoletoData(paymentId: string): Promise<GetBoletoDataResponse> {
+    const response = await axios.get<GetBoletoDataResponse>(
+      `${this.apiUrl}/payments/${paymentId}/identificationField`,
+      {
+        headers: {
+          access_token: this.accessToken,
+        },
+      },
+    )
+    return response.data
+  }
+
+  async getPixData(paymentId: string): Promise<GetPixDataResponse> {
+    const response = await axios.get<GetPixDataResponse>(
+      `${this.apiUrl}/payments/${paymentId}/pixQrCode`,
+      {
+        headers: {
+          access_token: this.accessToken,
+        },
+      },
+    )
+    return response.data
   }
 }
