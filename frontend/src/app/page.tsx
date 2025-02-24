@@ -1,5 +1,5 @@
-import { HomePage } from './home'
+import CreateUserPage from './users/create/page'
 
 export default function Home() {
-  return <HomePage />
+  return <CreateUserPage />
 }
