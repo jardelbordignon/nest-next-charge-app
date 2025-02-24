@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { AxiosError } from 'axios'
 import { toast } from 'react-hot-toast'
 import { TextInput, Button } from '@/components'
-import { type CreateUserFormData, createUserFormSchema, useUsers } from '@/hooks/useUsers'
+import { type CreateUserFormData, createUserFormSchema, useUsers } from '@/hooks/use-users'
 
 export default function CreateUserPage() {
 

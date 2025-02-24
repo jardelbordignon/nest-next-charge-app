@@ -14,6 +14,12 @@ export const createUserFormSchema = z.object({
   province: z.string(),
 })
 
+export const authenticateUserFormSchema = z.object({
+  email: z.string().email().min(1),
+  password: z.string().min(1),
+})
+
+export type AuthenticateUserFormSchema = z.infer<typeof authenticateUserFormSchema>
 export type CreateUserFormData = z.infer<typeof createUserFormSchema>
 
 export type User = CreateUserFormData & {
@@ -28,6 +34,14 @@ export const useUsers = () => {
     return response.data
   }
 
+  const authenticateUser = async (userData: AuthenticateUserFormSchema) => {
+    const response = await api.post<{ "accessToken": string }>('/users/authenticate', userData)
+    if (response.data.accessToken) {
+      api.defaults.headers.Authorization = `Bearer ${response.data.accessToken}`
+    }
+    return response.data
+  }
+  
   const createUser = async (userData: CreateUserFormData) => {
     const response = await api.post('/users', userData)
     return response.data
@@ -38,5 +52,5 @@ export const useUsers = () => {
     return response.data
   }
 
-  return { getUsers, createUser, deleteUser }
+  return { getUsers, createUser, authenticateUser, deleteUser }
 }
