@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { SocketGateway } from '@/app/socket.gateway'
 import { UserRepository } from '@/domains/user/repositories/user.repository'
 import { NotFoundError } from '@/infra/errors'
 import { PaymentProvider } from '@/infra/providers/payment/payment'
@@ -29,6 +30,7 @@ export class CreateChargeService {
     private chargeRepository: ChargeRepository,
     private userRepository: UserRepository,
     private paymentProvider: PaymentProvider,
+    private socketGateway: SocketGateway,
   ) {}
 
   async execute(data: CreateChargeDto): Promise<Charge> {
@@ -124,6 +126,11 @@ export class CreateChargeService {
         paymentProvider: 'ASAAS',
         paymentMethod,
       },
+    })
+
+    this.socketGateway.sendMessageToUser(receivedById!, {
+      type: 'success',
+      text: `Olá ${fullName.split(' ')[0]}!\nVocê recebeu uma cobrança de ${amount} reais referente à "${description}"`,
     })
 
     return charge

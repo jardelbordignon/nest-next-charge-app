@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common'
+import { AppSocketGateway } from '@/app/app.socket.gateway'
+import { SocketGateway } from '@/app/socket.gateway'
 import { AsaasPaymentProvider } from '@/infra/providers/payment/asaas-payment'
 import { PaymentProvider } from '@/infra/providers/payment/payment'
 import { PrismaModule } from '@/infra/providers/prisma/prisma.module'
@@ -38,6 +40,10 @@ import { WebhookChargeService } from './use-cases/webhook/webhook-charge.service
     {
       provide: PaymentProvider,
       useClass: AsaasPaymentProvider,
+    },
+    {
+      provide: SocketGateway,
+      useClass: AppSocketGateway,
     },
     CreateChargeService,
     FindManyChargeService,

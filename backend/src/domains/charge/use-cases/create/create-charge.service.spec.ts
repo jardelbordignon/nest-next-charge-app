@@ -1,4 +1,5 @@
 import { CREATE_USER_DATA } from 'test/utils'
+import { FakeSocketGateway } from '@/app/fake.socket.gateway'
 import { InMemoryUserRepository } from '@/domains/user/repositories/in-memory.user.repository'
 import { InMemoryPaymentProvider } from '@/infra/providers/payment/in-memory-payment'
 import { PaymentProvider } from '@/infra/providers/payment/payment'
@@ -11,6 +12,7 @@ describe('Create charge', () => {
   let userRepository: InMemoryUserRepository
   let createChargeService: CreateChargeService
   let paymentProvider: PaymentProvider
+  let fakeSocketGateway: FakeSocketGateway
   let john: User
   let jack: User
 
@@ -18,10 +20,13 @@ describe('Create charge', () => {
     chargeRepository = new InMemoryChargeRepository()
     userRepository = new InMemoryUserRepository()
     paymentProvider = new InMemoryPaymentProvider()
+    fakeSocketGateway = new FakeSocketGateway()
+
     createChargeService = new CreateChargeService(
       chargeRepository,
       userRepository,
       paymentProvider,
+      fakeSocketGateway,
     )
 
     john = await userRepository.create({ data: CREATE_USER_DATA })
