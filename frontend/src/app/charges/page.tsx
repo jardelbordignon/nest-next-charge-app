@@ -4,18 +4,20 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { GetChargesResponse, useCharges } from '@/hooks/use-charges';
 import { Button } from '@/components';
+import { useWebSocket } from '@/hooks/use-web-socket';
 
 export default function ChargesPage() {
   const { getCharges } = useCharges();
   const [charges, setCharges] = useState<GetChargesResponse>();
   const router = useRouter()
+  useWebSocket()
 
   useEffect(() => {
     getCharges().then(setCharges);
   }, []);
 
   return (
-    <main className='flex flex-col h-screen justify-center max-w-[1100px] mx-auto gap-4'>
+    <main className='flex flex-col h-screen justify-center max-w-[1100px] px-4 mx-auto gap-4'>
       <header className='px-6'>
         <h1 className='font-bold text-2xl leading-[160%]'>
           Minhas cobranças

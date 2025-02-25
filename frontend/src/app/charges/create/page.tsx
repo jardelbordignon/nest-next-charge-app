@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { AxiosError } from 'axios'
 import { toast } from 'react-hot-toast'
-import cookies from 'js-cookie'
 import { Button, SelectInput, TextInput } from '@/components'
+import { userIdInJwt } from '@/utils/user-id-in-jwt'
 import { type CreateChargeFormSchema, createChargeFormSchema, useCharges } from '@/hooks/use-charges'
 import { type User, useUsers } from '@/hooks/use-users'
 
@@ -46,9 +46,7 @@ export default function AuthenticateUserPage() {
     getUsers().then(setUsers)
   }, [])
 
-  const accessToken = cookies.get('access_token')
-  const payload = JSON.parse(atob(accessToken!.split('.')[1]))
-  const currentUserId = payload.sub || null
+  const currentUserId = userIdInJwt()
 
   const selectUsersOptions = users
     .filter(user => user.id !== currentUserId)
